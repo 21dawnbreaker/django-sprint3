@@ -32,8 +32,10 @@ class Post(PublishedModel):
         null=True,
         verbose_name='Категория',
     )
-    verbose_name = 'публикация'
-    verbose_name_plural = 'Публикации'
+
+    class Meta:
+        verbose_name = 'публикация'
+        verbose_name_plural = 'Публикации'
 
 class Category(PublishedModel):
     title = models.CharField(max_length=256, verbose_name='Заголовок')
@@ -45,10 +47,14 @@ class Category(PublishedModel):
                   'разрешены символы латиницы, цифры, '
                   'дефис и подчёркивание.'
     )
-    verbose_name = 'категория'
-    verbose_name_plural = 'Категории'
+
+    class Meta:
+        verbose_name = 'категория'
+        verbose_name_plural = 'Категории'
 
 class Location(PublishedModel):
     name = models.CharField(max_length=256, verbose_name='Название места')
-    verbose_name = 'местоположение'
-    verbose_name_plural = 'Местоположения'
+
+    class Meta:
+        verbose_name = 'местоположение'
+        verbose_name_plural = 'Местоположения'
