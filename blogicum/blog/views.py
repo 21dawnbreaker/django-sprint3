@@ -1,8 +1,7 @@
 import datetime
 
-from django.shortcuts import render, get_object_or_404, get_list_or_404
-from blog.models import Post, Category, Location
-from tests.fixtures.fixture_data import published_category
+from django.shortcuts import render, get_object_or_404
+from blog.models import Post, Category
 
 
 def index(request):
@@ -34,14 +33,17 @@ def post_detail(request, post_id: int):
 
 
 def category_posts(request, category_slug):
-    category = get_object_or_404(Category, slug=category_slug)
+    category = get_object_or_404(
+        Category, slug=category_slug, is_published=True
+    )
     post_list = Post.objects.select_related(
-            'category', 'location',
-        ).filter(
-            category__is_published=category.is_published,
-            category__slug=category_slug,
-            pub_date__lte=datetime.datetime.now(),
-        )
+        'category', 'location'
+    ).filter(
+        category__is_published=category.is_published,
+        category__slug=category_slug,
+        is_published=True,
+        pub_date__lte=datetime.datetime.now()
+    )
 
     context = {
         'post_list': post_list,
