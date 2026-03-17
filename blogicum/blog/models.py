@@ -1,11 +1,27 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from core.models import PublishedModel
-
 User = get_user_model()
 
 CHAR_FIELD_MAX_LENGTH = 256
+
+
+class PublishedModel(models.Model):
+    """Абстрактная модель с основными
+    (общими) аттрибутами.
+    """
+
+    is_published = models.BooleanField(
+        default=True, verbose_name='Опубликовано',
+        help_text='Снимите галочку, чтобы скрыть публикацию.'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Добавлено'
+    )
+
+    class Meta:
+        abstract = True
 
 
 class Category(PublishedModel):
